@@ -45,4 +45,9 @@
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="VBInterface">
+      <Filter>Header Files</Filter>
+    </None>
+  </ItemGroup>
 </Project>

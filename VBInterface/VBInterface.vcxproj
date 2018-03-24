@@ -106,6 +106,7 @@
     <ClInclude Include="VoicemeeterRemote.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="VBInterface" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">

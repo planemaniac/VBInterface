@@ -4,9 +4,10 @@
 #include <QDebug>
 #include <QThread>
 
+VBInterface::VBInterface() {}
 
 int VBInterface::connect() {
-	qInfo() << "Connecting to Voicemeeter";
+	qInfo() << "Connecting to Voicemeeter...";
 	return loadDLL();
 }
 
@@ -24,6 +25,12 @@ bool VBInterface::isConnected() {
 }
 
 void VBInterface::login() {
+	if ( !isConnected() && connect() < 0 ) {
+		qCritical() << "Cannot login, failed to connect to Voicemeeter";
+		return;
+	}
+
+
 	if ( isConnected() && !loggedIn ) {
 		long status = iVMR.VBVMR_Login();
 		loggedIn = true;
@@ -31,15 +38,18 @@ void VBInterface::login() {
 			qInfo() << "Voicemeeter not running... waiting...";
 			//startVoiceMeeter(); // For some reason this doesn't work
 			getVolume( BUS1 ); //  This will block until it can get a value
+			return;
 		}
+
+		qInfo() << "Logged in";
 	}
 }
 
 void VBInterface::logout() {
 	if ( isConnected() && loggedIn ) {
-		qInfo() << "Logging out of Voicemeeter";
 		iVMR.VBVMR_Logout();
 		loggedIn = false;
+		qInfo() << "Logged out of Voicemeeter";
 	}
 }
 
